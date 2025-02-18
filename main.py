@@ -5,11 +5,18 @@ from langchain.agents import initialize_agent, AgentType
 from langchain_community.tools import Tool
 from langchain_community.llms import OpenAI
 import requests
+from dotenv import load_dotenv
 
 app = FastAPI()
 
+# Load environment variables from .env file
+load_dotenv()
+
 # Set OpenAI API key (Use an environment variable in production)
-os.environ["OPENAI_API_KEY"] = "your_openai_api_key"
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+if not OPENAI_API_KEY:
+    raise ValueError("Missing OPENAI_API_KEY environment variable!")
 
 # FPL Data Fetcher Tool
 def get_fpl_top_scorers():
